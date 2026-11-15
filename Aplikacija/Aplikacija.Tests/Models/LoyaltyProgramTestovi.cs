@@ -10,9 +10,9 @@ namespace Aplikacija.Tests.Models;
 [TestClass]
 public class LoyaltyProgramTests
 {
-    // ---------- Svojstva i GetUkupniBodovi ----------
+    //  Svojstva i GetUkupniBodovi 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void NoviProgram_ImaPodrazumijevaneVrijednosti()
     {
         var program = new LoyaltyProgram();
@@ -22,7 +22,7 @@ public class LoyaltyProgramTests
         Assert.AreEqual(0.0, program.PopustPoBodu);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow(0)]
     [DataRow(1)]
     [DataRow(250)]
@@ -34,7 +34,7 @@ public class LoyaltyProgramTests
         Assert.AreEqual(bodovi, program.GetUkupniBodovi());
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void GetUkupniBodovi_NakonPromjeneBodova_VracaNovuVrijednost()
     {
         var program = new LoyaltyProgram { UkupniBodovi = 10 };
@@ -44,7 +44,7 @@ public class LoyaltyProgramTests
         Assert.AreEqual(25, program.GetUkupniBodovi());
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void PopustPoBodu_ZadrzavaDecimalnuVrijednost()
     {
         var program = new LoyaltyProgram { PopustPoBodu = 0.04 };
@@ -52,7 +52,7 @@ public class LoyaltyProgramTests
         Assert.AreEqual(0.04, program.PopustPoBodu, 1e-9);
     }
 
-    [Owner("Ajdin"), TestMethod, TestCategory("PostojecePonasanje")]
+    [Owner("Ajdin.L"), TestMethod, TestCategory("PostojecePonasanje")]
     public void GetUkupniBodovi_NegativniBodovi_ModelIhNeOdbija()
     {
         // Model nema validaciju: ogranicenje (ne ispod nule) postoji samo u KorisnikController.
@@ -63,16 +63,16 @@ public class LoyaltyProgramTests
             new List<ValidationResult>(), validateAllProperties: true));
     }
 
-    // ---------- Atributi ----------
+    //  Atributi 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Id_JeOznacenKaoKljuc()
     {
         Assert.IsNotNull(typeof(LoyaltyProgram).GetProperty(nameof(LoyaltyProgram.Id))!
             .GetCustomAttribute<KeyAttribute>());
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void KorisnikId_JeStraniKljucKaKorisniku()
     {
         var atribut = typeof(LoyaltyProgram).GetProperty(nameof(LoyaltyProgram.KorisnikId))!
@@ -82,18 +82,17 @@ public class LoyaltyProgramTests
         Assert.AreEqual("Korisnik", atribut.Name);
     }
 
-    // ---------- Baza ----------
+    //  Baza 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Snimanje_ValidanProgram_DodjeljujeIdIUcitavaKorisnika()
     {
-        // Arrange
         using var baza = new TestBaza();
         baza.Dodaj(TestObjekti.NoviKorisnik("k1", "Amar", "Hodzic"));
         var program = new LoyaltyProgram { KorisnikId = "k1", UkupniBodovi = 50, PopustPoBodu = 0.02 };
-        // Act
+        
         baza.Dodaj(program);
-        // Assert
+        
         Assert.IsTrue(program.Id > 0);
 
         using var provjera = baza.NoviKontekst();
@@ -104,7 +103,7 @@ public class LoyaltyProgramTests
         Assert.AreEqual("Amar", ucitan.Korisnik.Ime);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Snimanje_NepostojeciKorisnik_BacaDbUpdateException()
     {
         using var baza = new TestBaza();
@@ -113,18 +112,17 @@ public class LoyaltyProgramTests
         TestObjekti.OcekujIzuzetak<DbUpdateException>(() => baza.Dodaj(program));
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Izmjena_PromjenaBodova_TrajnoSeSnimaUBazu()
     {
-        // Arrange
         using var baza = new TestBaza();
         baza.Dodaj(TestObjekti.NoviKorisnik("k1"),
             new LoyaltyProgram { KorisnikId = "k1", UkupniBodovi = 10, PopustPoBodu = 0.01 });
-        // Act
+        
         var program = baza.Context.LoyaltyProgram.Single();
         program.UkupniBodovi += 40;
         baza.Context.SaveChanges();
-        // Assert
+       
         using var provjera = baza.NoviKontekst();
         Assert.AreEqual(50, provjera.LoyaltyProgram.Single().GetUkupniBodovi());
     }

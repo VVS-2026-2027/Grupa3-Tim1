@@ -38,7 +38,7 @@ public static class TestObjekti
         Uredjaj = null! // Vezu ucitava EF preko postojeceg stranog kljuca.
     };
 
-    // ---------- Identity ----------
+    //  Identity 
 
     // Pravi UserManager nad istim kontekstom kao i kontroler (nema potrebe za mockovima).
     public static UserManager<Korisnik> NapraviUserManager(ApplicationDbContext context)
@@ -85,7 +85,7 @@ public static class TestObjekti
         RoleId = "uloga-" + naziv.ToLowerInvariant()
     };
 
-    // ---------- HTTP kontekst ----------
+    //  HTTP kontekst 
 
     public static ClaimsPrincipal Anoniman() => new(new ClaimsIdentity());
 
@@ -119,7 +119,7 @@ public static class TestObjekti
             })
             .Build();
 
-    // ---------- Provjera izuzetaka (neovisno o verziji MSTest-a) ----------
+    //  Provjera izuzetaka
 
     public static async Task<TIzuzetak> OcekujIzuzetakAsync<TIzuzetak>(Func<Task> akcija)
         where TIzuzetak : Exception

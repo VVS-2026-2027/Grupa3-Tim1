@@ -33,21 +33,21 @@ public class KorisnikTests
     private static List<ValidationResult> GreskeZa(Korisnik korisnik, string polje) =>
         Validiraj(korisnik).Where(r => r.MemberNames.Contains(polje)).ToList();
 
-    // ---------- Osnovno ----------
+    //  Osnovno 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Korisnik_JeIdentityUser()
     {
         Assert.IsInstanceOfType<IdentityUser>(new Korisnik());
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void NoviKorisnik_ClanarinaJeNeaktivnaPoDefaultu()
     {
         Assert.IsFalse(new Korisnik().ClanarinaAktivna);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void ClanarinaAktivna_MozeSeMijenjati()
     {
         var korisnik = new Korisnik { ClanarinaAktivna = true };
@@ -57,22 +57,22 @@ public class KorisnikTests
         Assert.IsFalse(korisnik.ClanarinaAktivna);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void IspravanKorisnik_ProlaziValidaciju()
     {
         Assert.AreEqual(0, Validiraj(Ispravan()).Count);
     }
 
-    // ---------- Required ----------
+    //  Required 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void ImeIPrezime_Null_NijeValidno()
     {
         foreach (var polje in ImenaPolja)
             Assert.AreEqual(1, GreskeZa(Sa(polje, null), polje).Count, $"Polje: {polje}");
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow(""), DataRow(" "), DataRow("   ")]
     public void ImeIPrezime_PrazanTekst_NijeValidno(string vrijednost)
     {
@@ -80,9 +80,9 @@ public class KorisnikTests
             Assert.IsTrue(GreskeZa(Sa(polje, vrijednost), polje).Count > 0, $"Polje: {polje}");
     }
 
-    // ---------- Duzina (2-30) ----------
+    //  Duzina (2-30) 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow(1, false)]
     [DataRow(2, true)]
     [DataRow(3, true)]
@@ -100,7 +100,7 @@ public class KorisnikTests
         }
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow("Ime", "Name must be between 2 and 30 characters long!")]
     [DataRow("Prezime", "Surname must be between 2 and 30 characters long!")]
     public void PrekratkoIme_VracaPorukuODuzini(string polje, string poruka)
@@ -111,9 +111,9 @@ public class KorisnikTests
         Assert.AreEqual(poruka, greske[0].ErrorMessage);
     }
 
-    // ---------- Regex (slova i razmaci) ----------
+    //  Regex (slova i razmaci) 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow("Ana Marija")]
     [DataRow("Šđčćž")]
     [DataRow("ŠĐČĆŽ")]
@@ -125,7 +125,7 @@ public class KorisnikTests
             Assert.AreEqual(0, GreskeZa(Sa(polje, vrijednost), polje).Count, $"Polje: {polje}");
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow("Amar1")]
     [DataRow("12")]
     [DataRow("Amar!")]
@@ -141,7 +141,7 @@ public class KorisnikTests
                 $"Polje: {polje}, vrijednost: {vrijednost}");
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow("Ime", "Name can only contain letters and spaces!")]
     [DataRow("Prezime", "Surname can only contain letters and spaces!")]
     public void NeispravniZnakovi_VracajuPorukuORegexu(string polje, string poruka)
@@ -152,7 +152,7 @@ public class KorisnikTests
         Assert.AreEqual(poruka, greske[0].ErrorMessage);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void NeispravnoIme_NeUtjeceNaPrezime()
     {
         var korisnik = Sa("Ime", "Amar1");
@@ -161,9 +161,9 @@ public class KorisnikTests
         Assert.AreEqual(0, GreskeZa(korisnik, "Prezime").Count);
     }
 
-    // ---------- Atributi ----------
+    //  Atributi 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     [DataRow("Ime", "Name: ")]
     [DataRow("Prezime", "Surname: ")]
     [DataRow("ClanarinaAktivna", "Membership Active: ")]
@@ -175,25 +175,24 @@ public class KorisnikTests
         Assert.AreEqual(ocekivano, atribut.DisplayName);
     }
 
-    // ---------- Baza ----------
+    //  Baza 
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Snimanje_IspravanKorisnik_UcitavaSeSaIstimPodacima()
     {
-        // Arrange
         using var baza = new TestBaza();
         baza.Dodaj(TestObjekti.NoviKorisnik("k1", "Amar", "Hodžić", clanarinaAktivna: true));
-        // Act
+        
         using var provjera = baza.NoviKontekst();
         var korisnik = provjera.Korisnik.Single();
-        // Assert
+        
         Assert.AreEqual("k1", korisnik.Id);
         Assert.AreEqual("Amar", korisnik.Ime);
         Assert.AreEqual("Hodžić", korisnik.Prezime);
         Assert.IsTrue(korisnik.ClanarinaAktivna);
     }
 
-    [Owner("Ajdin"), TestMethod]
+    [Owner("Ajdin.L"), TestMethod]
     public void Snimanje_BezImena_BacaDbUpdateExceptionJerJeKolonaObavezna()
     {
         using var baza = new TestBaza();
@@ -203,7 +202,7 @@ public class KorisnikTests
         TestObjekti.OcekujIzuzetak<DbUpdateException>(() => baza.Dodaj(korisnik));
     }
 
-    [Owner("Ajdin"), TestMethod, TestCategory("PostojecePonasanje")]
+    [Owner("Ajdin.L"), TestMethod, TestCategory("PostojecePonasanje")]
     public void Snimanje_NeispravnoIme_EfNeProvodiRegexValidaciju()
     {
         // Atributi se provjeravaju tek u MVC-u (ModelState), a ne pri snimanju u bazu.
