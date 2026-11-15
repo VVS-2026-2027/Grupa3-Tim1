@@ -9,7 +9,7 @@
 *.rsuser
 *.vsidx
 TestResults/
-coverage-report/
+coverage-report*/
 
 # Publish profile user postavke (sami .pubxml profili ostaju u repou)
 *.pubxml.user
