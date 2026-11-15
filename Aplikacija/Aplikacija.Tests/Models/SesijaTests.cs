@@ -61,4 +61,34 @@ public class SesijaTests
 
         Assert.AreEqual(ocekivanoGresaka, greske.Count);
     }
+
+    [TestMethod]
+    public void SkalarnaSvojstva_PostavljeneVrijednosti_VracajuIsteVrijednosti()
+    {
+        var kraj = new DateTime(2026, 11, 15, 12, 0, 0);
+
+        var sesija = new Sesija { VrijemeZavrsetka = kraj, UredjajId = 3, KorisnikId = "k1", TakmicenjeId = 9, AnonimniGost = true };
+
+        Assert.AreEqual(kraj, sesija.VrijemeZavrsetka);
+        Assert.AreEqual(3, sesija.UredjajId);
+        Assert.AreEqual("k1", sesija.KorisnikId);
+        Assert.AreEqual(9, sesija.TakmicenjeId);
+        Assert.IsTrue(sesija.AnonimniGost);
+    }
+
+    [TestMethod]
+    public void NavigacijskaSvojstva_PostavljeneVrijednosti_VracajuIsteObjekte()
+    {
+        var uredjaj = new Uredjaj { Id = 3 };
+        var korisnik = new Korisnik { Id = "k1" };
+        var takmicenje = new Takmicenje();
+        var placanja = new List<Placanje>();
+
+        var sesija = new Sesija { Uredjaj = uredjaj, Korisnik = korisnik, Takmicenje = takmicenje, Placanja = placanja };
+
+        Assert.AreSame(uredjaj, sesija.Uredjaj);
+        Assert.AreSame(korisnik, sesija.Korisnik);
+        Assert.AreSame(takmicenje, sesija.Takmicenje);
+        Assert.AreSame(placanja, sesija.Placanja);
+    }
 }

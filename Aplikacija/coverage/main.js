@@ -292,7 +292,7 @@ var assemblies = [
     "classes": [
       { "name": "Aplikacija.Controllers.SesijaController", "rp": "Aplikacija_SesijaController.html", "cl": 230, "ucl": 0, "cal": 230, "tl": 370, "cb": 55, "tb": 56, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Aplikacija.Models.PricingService", "rp": "Aplikacija_PricingService.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 7, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Aplikacija.Models.Sesija", "rp": "Aplikacija_Sesija.html", "cl": 10, "ucl": 5, "cal": 15, "tl": 45, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Aplikacija.Models.Sesija", "rp": "Aplikacija_Sesija.html", "cl": 15, "ucl": 0, "cal": 15, "tl": 45, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
