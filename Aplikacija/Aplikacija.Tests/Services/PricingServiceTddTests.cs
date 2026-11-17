@@ -28,4 +28,15 @@ public class PricingServiceTddTests
 
         Assert.AreEqual(5.0, rezultat, 0.001);
     }
+
+    [TestMethod]
+    [DataRow(2, 5.0, 10.0)]
+    [DataRow(3, 4.0, 12.0)]
+    [DataRow(10, 2.5, 25.0)]
+    public void IzracunajCijenu_ViseSati_VracaSatiPutaCijena(int sati, double cijena, double ocekivano)
+    {
+        var rezultat = _servis.IzracunajCijenu(Pocetak, Pocetak.AddHours(sati), cijena);
+
+        Assert.AreEqual(ocekivano, rezultat, 0.001);
+    }
 }
