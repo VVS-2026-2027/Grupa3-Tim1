@@ -58,4 +58,11 @@ public class PricingServiceTddTests
         Assert.ThrowsException<ArgumentException>(
             () => _servis.IzracunajCijenu(Pocetak, Pocetak.AddMinutes(minuta), 5.0));
     }
+
+    [TestMethod]
+    public void IzracunajCijenu_NegativnaCijenaPoSatu_BacaArgumentException()
+    {
+        Assert.ThrowsException<ArgumentException>(
+            () => _servis.IzracunajCijenu(Pocetak, Pocetak.AddHours(1), -1.0));
+    }
 }
