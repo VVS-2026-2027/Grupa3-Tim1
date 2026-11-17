@@ -20,4 +20,12 @@ public class PricingServiceTddTests
     {
         _servis = new PricingService();
     }
+
+    [TestMethod]
+    public void IzracunajCijenu_JedanSat_VracaCijenuPoSatu()
+    {
+        var rezultat = _servis.IzracunajCijenu(Pocetak, Pocetak.AddHours(1), 5.0);
+
+        Assert.AreEqual(5.0, rezultat, 0.001);
+    }
 }
