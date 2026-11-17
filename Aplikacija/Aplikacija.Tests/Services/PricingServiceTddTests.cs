@@ -48,4 +48,14 @@ public class PricingServiceTddTests
 
         Assert.AreEqual(1.67, rezultat, 0.001);
     }
+
+
+    [TestMethod]
+    [DataRow(0)]
+    [DataRow(-30)]
+    public void IzracunajCijenu_KrajNijePoslijePocetka_BacaArgumentException(int minuta)
+    {
+        Assert.ThrowsException<ArgumentException>(
+            () => _servis.IzracunajCijenu(Pocetak, Pocetak.AddMinutes(minuta), 5.0));
+    }
 }
