@@ -39,4 +39,13 @@ public class PricingServiceTddTests
 
         Assert.AreEqual(ocekivano, rezultat, 0.001);
     }
+
+
+    [TestMethod]
+    public void IzracunajCijenu_DvadesetMinuta_ZaokruzujeNaDvijeDecimale()
+    {
+        var rezultat = _servis.IzracunajCijenu(Pocetak, Pocetak.AddMinutes(20), 5.0);
+
+        Assert.AreEqual(1.67, rezultat, 0.001);
+    }
 }
