@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public double IzracunajCijenu(DateTime pocetak, DateTime kraj, double cijenaPoSatu) => (kraj - pocetak).TotalHours * cijenaPoSatu;
+        public double IzracunajCijenu(DateTime pocetak, DateTime kraj, double cijenaPoSatu) => Math.Round((kraj - pocetak).TotalHours * cijenaPoSatu, 2);
     }
 }
