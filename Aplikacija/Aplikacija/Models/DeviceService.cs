@@ -7,6 +7,12 @@
 
     public bool MozeSeRezervisati(Uredjaj uredjaj, DateTime vrijemeOd, DateTime vrijemeDo, DateTime sada)
         {
+
+            if (vrijemeOd < sada)
+            {
+                return false;
+            }
+
             return uredjaj.Status != StatusUredjaja.Neispravan;
         }
     } 
