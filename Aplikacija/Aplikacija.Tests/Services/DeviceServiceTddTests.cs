@@ -15,4 +15,14 @@ public class DeviceServiceTddTests
     {
         _servis = new DeviceService();
     }
+
+    [TestMethod]
+    public void MozeSeRezervisati_SlobodanUredjajBuduciTermin_VracaTrue()
+    {
+        var uredjaj = new Uredjaj { Status = StatusUredjaja.Slobodan };
+
+        var rezultat = _servis.MozeSeRezervisati(uredjaj, Sada.AddHours(2), Sada.AddHours(3), Sada);
+
+        Assert.IsTrue(rezultat);
+    }
 }
