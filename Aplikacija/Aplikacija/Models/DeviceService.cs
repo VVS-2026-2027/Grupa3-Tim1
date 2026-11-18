@@ -8,6 +8,11 @@
     public bool MozeSeRezervisati(Uredjaj uredjaj, DateTime vrijemeOd, DateTime vrijemeDo, DateTime sada)
         {
 
+            if (vrijemeDo <= vrijemeOd)
+            {
+                throw new ArgumentException("Kraj mora biti poslije pocetka.");
+            }
+
             if (vrijemeOd < sada)
             {
                 return false;
