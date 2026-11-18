@@ -7,7 +7,7 @@
 
     public bool MozeSeRezervisati(Uredjaj uredjaj, DateTime vrijemeOd, DateTime vrijemeDo, DateTime sada)
         {
-            return false;
+            return true;
         }
     } 
 }
