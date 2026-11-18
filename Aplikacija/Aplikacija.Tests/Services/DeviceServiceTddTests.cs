@@ -45,4 +45,16 @@ public class DeviceServiceTddTests
 
         Assert.IsFalse(rezultat);
     }
+
+    [TestMethod]
+    [DataRow(0)]
+    [DataRow(-1)]
+    public void MozeSeRezervisati_KrajNijePoslijePocetka_BacaArgumentException(int satiTrajanja)
+    {
+        var uredjaj = new Uredjaj { Status = StatusUredjaja.Slobodan };
+        var od = Sada.AddHours(2);
+
+        Assert.ThrowsException<ArgumentException>(() =>
+            _servis.MozeSeRezervisati(uredjaj, od, od.AddHours(satiTrajanja), Sada));
+    }
 }
