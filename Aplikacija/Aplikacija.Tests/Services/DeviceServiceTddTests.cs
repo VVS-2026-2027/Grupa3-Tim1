@@ -25,4 +25,14 @@ public class DeviceServiceTddTests
 
         Assert.IsTrue(rezultat);
     }
+
+    [TestMethod]
+    public void MozeSeRezervisati_NeispravanUredjaj_VracaFalse()
+    {
+        var uredjaj = new Uredjaj { Status = StatusUredjaja.Neispravan };
+
+        var rezultat = _servis.MozeSeRezervisati(uredjaj, Sada.AddHours(2), Sada.AddHours(3), Sada);
+
+        Assert.IsFalse(rezultat);
+    }
 }
